@@ -4,6 +4,7 @@ from .models import Patient, Insurance, MedicalRecord
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 
 # GET /api/patients/ => list all patients
 # POST /api/patients/ => create a new patient
@@ -28,19 +29,25 @@ def list_patients(request):
         return Response(serializer.data, status.HTTP_201_CREATED)
 """
     
-class ListPatientsView(APIView):
+class ListPatientsView(ListAPIView, CreateAPIView):
     allowed_methods = ['GET','POST']
+    serializer_class = PatientSerializer
+    queryset = Patient.objects.all()
 
+    """
     def get(self, request):
         patients = Patient.objects.all()
         serializer = PatientSerializer(patients, many=True)
         return Response(serializer.data)
+    
     
     def post(self, request):
         serializer = PatientSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status.HTTP_201_CREATED)
+    """
+
 """ 
 @api_view(['GET','PUT','DELETE'])
 def detail_patient(request, pk):
@@ -60,9 +67,11 @@ def detail_patient(request, pk):
         patient.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 """ 
-class DetailPatientView(APIView):
+class DetailPatientView(RetrieveUpdateDestroyAPIView):
     allowed_methods = ['GET','PUT','DELETE']
-
+    serializer_class = PatientSerializer
+    queryset = Patient.objects.all()
+    """ 
     def get(self, request, pk):
         try:
             patient = Patient.objects.get(pk=pk)
@@ -87,6 +96,8 @@ class DetailPatientView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         patient.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    """
+
 
 
 
