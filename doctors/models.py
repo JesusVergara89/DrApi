@@ -1,6 +1,6 @@
 from django.db import models
 
-class Doctor(models.Model):
+class Doctor(models.Model):        
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     qualification = models.CharField(max_length=100)    
@@ -8,6 +8,7 @@ class Doctor(models.Model):
     email = models.EmailField()
     address = models.TextField(max_length=100)
     biography = models.TextField()
+    is_on_vacation = models.BooleanField(default=False)
 
 class Department(models.Model):
     name = models.CharField(max_length=100)
