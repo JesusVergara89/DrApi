@@ -22,7 +22,7 @@ class PatientSerializer(serializers.ModelSerializer):
         ]
     def get_age(self, obj):
         age_td = date.today() - obj.date_of_bith
-        return age_td // 365
+        return age_td.days // 365
 
 
 class InsuranceSerializer(serializers.ModelSerializer):
