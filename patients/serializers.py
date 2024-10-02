@@ -6,7 +6,7 @@ from bookings.serializers import AppointmentSerializer
 
 class PatientSerializer(serializers.ModelSerializer):
     appointments = AppointmentSerializer(many=True, read_only=True)
-    age ) serializers.SerializerMethodField()
+    age = serializers.SerializerMethodField()
     class Meta:
         model = Patient
         fields = [
